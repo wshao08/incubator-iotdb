@@ -66,9 +66,9 @@ IF "%BIT_VERSION%" == "64-Bit" (
 @REM You can put your env variable here
 @REM set JAVA_HOME=%JAVA_HOME%
 
-:end_config_setting
 @REM set gc log.
-IF "x%1" equ "xprintgc" (
+:end_config_setting
+IF ["%1"] EQU ["printgc"] (
 	IF %JAVA_VERSION% == 8 (
 	    md %IOTDB_HOME%\logs
 		set IOTDB_HEAP_OPTS=%IOTDB_HEAP_OPTS% -Xloggc:"%IOTDB_HOME%\logs\gc.log" -XX:+PrintGCDateStamps -XX:+PrintGCDetails  -XX:+PrintGCApplicationStoppedTime -XX:+PrintPromotionFailure -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=10M
