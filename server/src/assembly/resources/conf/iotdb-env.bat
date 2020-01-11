@@ -53,7 +53,7 @@ for /f "tokens=1-3" %%j in ('java -version 2^>^&1') do (
 	@rem echo %%l
 	set BIT_VERSION=%%l
 )
-IF "%BIT_VERSION%" == "64-Bit" (
+IF ["%BIT_VERSION%"] EQU ["64-Bit"] (
 	rem 64-bit Java
 	echo Detect 64-bit Java, maximum memory allocation pool = 2GB, initial memory allocation pool = 2GB
 	set IOTDB_HEAP_OPTS=-Xmx2G -Xms2G
