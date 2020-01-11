@@ -68,7 +68,7 @@ IF "%BIT_VERSION%" == "64-Bit" (
 
 :end_config_setting
 @REM set gc log.
-IF "%1" equ "printgc" (
+IF "x%1" equ "xprintgc" (
 	IF %JAVA_VERSION% == 8 (
 	    md %IOTDB_HOME%\logs
 		set IOTDB_HEAP_OPTS=%IOTDB_HEAP_OPTS% -Xloggc:"%IOTDB_HOME%\logs\gc.log" -XX:+PrintGCDateStamps -XX:+PrintGCDetails  -XX:+PrintGCApplicationStoppedTime -XX:+PrintPromotionFailure -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=10M
