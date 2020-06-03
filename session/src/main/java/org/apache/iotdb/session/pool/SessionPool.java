@@ -77,12 +77,18 @@ public class SessionPool {
 
   private long timeout = 60*1000; //ms
   private static int RETRY = 3;
+  private boolean enableRPCCompression;
 
-  public SessionPool(String ip, int port, String user, String password, int maxSize) {
-    this(ip, port, user, password, maxSize, 10000, 60_000);
+  public SessionPool(String ip, int port, String user, String password, int maxSize, boolean enableRPCCompression) {
+    this(ip, port, user, password, maxSize, 10000, 60_000, enableRPCCompression);
   }
 
-  public SessionPool(String ip, int port, String user, String password, int maxSize, int fetchSize, long timeout) {
+  public SessionPool(String ip, int port, String user, String password, int maxSize) {
+    this(ip, port, user, password, maxSize, 10000, 60_000, false);
+  }
+
+  public SessionPool(String ip, int port, String user, String password, int maxSize, int fetchSize,
+      long timeout, boolean enableRPCCompression) {
     this.maxSize = maxSize;
     this.ip = ip;
     this.port = port;
@@ -90,6 +96,7 @@ public class SessionPool {
     this.password = password;
     this.fetchSize = fetchSize;
     this.timeout = timeout;
+    this.enableRPCCompression = enableRPCCompression;
   }
 
   //if this method throws an exception, either the server is broken, or the ip/port/user/password is incorrect.
@@ -134,7 +141,7 @@ public class SessionPool {
         logger.error("Create a new Session {}, {}, {}, {}", ip, port, user, password);
       }
       session = new Session(ip, port, user, password, fetchSize);
-      session.open();
+      session.open(enableRPCCompression);
       return session;
     }
   }

@@ -84,6 +84,10 @@ public class Session {
     this.fetchSize = fetchSize;
   }
 
+  public void open(boolean enableRPCCompression) throws IoTDBSessionException {
+    open(enableRPCCompression, 0);
+  }
+
   public void open() throws IoTDBSessionException {
     open(false, 0);
   }
@@ -305,7 +309,7 @@ public class Session {
     request.setValuesList(valuesList);
 
     try {
-      for (TSStatus cur : client.insertRowInBatch(request).getStatusList()) {
+      for (TSStatus cur : client.testInsertRowInBatch(request).getStatusList()) {
         RpcUtils.verifySuccess(cur);
       }
     } catch (TException | IoTDBRPCException e) {
